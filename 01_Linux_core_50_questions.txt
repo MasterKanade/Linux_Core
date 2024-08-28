@@ -1,0 +1,59 @@
+How to set a username and password that never expires?
+==> chage -M -1 <user_name>
+here -1 will set it to the never expire mode.
+location to see all the users: cat /etc/passwd
+
+to get the all details of particular user you can use following command.
+> chage -l <user_name>
+
+chage --help to get the all parameters of the chage command
+================================================================================
+
+Why /etc/passwd and /etc/shadow file can not be merged into 1 file
+==> The existence of the two files is a consequence of that /etc/passwd is a text file
+that can be read by other applications(as finger,ident or ls as example) therefore, attacker could gain access to the information of the file that included the hashed password.
+Therefore, to increase security, the hashed password that used to be in the file was moved to other file called /etc/shadow that is accessible only by root
+
+====================================================================================
+
+3. To list all the files opened by a particular PID.
+==> everything in linux is file.
+> lsof -p PID (here PID is processID of any particular service)
+count number of files and processes. i.e the number of files and processes has been opened by any particular service will be shown
+
+lsof --help
+====================================================================================
+
+4. We're unable to unmount the file systems, what are the reason behind it?
+==> 
+# if you are in the same directory
+# some users are present in the directory and using its contents 
+  fuser -cu /dev/sda 
+# some of the files are open in the directory lsof /dev/sda7
+
+====================================================================================
+
+5. what could be the reason if server take more time after reboot?
+==>
+# file system got corrupt and its ext2
+# ext2 is not having journaling feature
+
+====================================================================================
+6. we are trying to create a file under any partition but we are getting permission denied alert. What could be the reason? However, no space issue and no permission issue.
+
+==> 
+# I am running out of inode
+# Sometimes, df command reports that there is enough free space but system claims file-system is full
+# df -i 
+# df -i /fpusers/
+====================================================================================
+
+7. How to check kernel routing table information?
+==> 
+There are 3 commands to check routing table information.
+
+# command-1: route -n 
+# command-2: netstat -rn 
+# command-3: ip route 
+
+Two machines are connected with each other on the network by using gateway.
